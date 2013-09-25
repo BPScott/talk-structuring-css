@@ -44,17 +44,17 @@ theme_highlight: zenburn
 
 <section>
   <h2>CSS is Easy</h2>
-  <pre><code>
+<% code 'scss' do %>
 .selector {
   property: value;
 }
-  </code></pre>
+<% end %>
 </section>
 
 
 <section>
   <h2>Managing CSS is Hard</h2>
-  <pre><code>
+<% code 'scss' do %>
 .selector {
   property: value;
 }
@@ -67,7 +67,7 @@ theme_highlight: zenburn
 .am-i-related-to-that-stuff-above {
   seriously: 'who knows';
 }
-  </code></pre>
+<% end %>
 
   <aside class="notes">
     /programmes is a long-lived project that continue to grow.
@@ -177,7 +177,7 @@ theme_highlight: zenburn
 <section>
   <h2>BEM</h2>
 
-  <pre><code>
+<% code 'html' do %>
 <div class="media media--right">
   <div class="media__img">
     <img src="cats.gif" alt="" />
@@ -187,7 +187,7 @@ theme_highlight: zenburn
     the media block when reading HTML
   </div>
 </div>
-  </code></pre>
+<% end %>
 
   <aside class="notes">
     * Keeps specificity low as usually you're only defining a single class
@@ -248,14 +248,14 @@ theme_highlight: zenburn
 
 <section>
   <h2>Defining Breakpoints</h2>
-  <pre><code>
+<% code 'scss' do %>
 // _global_variables.scss
 $breakup-breakpoints: (
   'thin' '(max-width: 35.999em)',
   'wide' '(min-width: 36em)',
   'full' '(min-width: 61em)'
 );
-  </code></pre>
+<% end %>
 
   <aside class="notes">
     Wrapping everything in a two mixins is a bit repetitive and you shall share
@@ -266,7 +266,7 @@ $breakup-breakpoints: (
 <section>
   <h2>A Component</h2>
 
-  <pre><code>
+<% code 'scss' do %>
 // _component.scss
 @include breakup-block('basic') {
   .component { content: 'From basic'; }
@@ -279,7 +279,7 @@ $breakup-breakpoints: (
 @include breakup-breakpoint('wide') {
   .component { content: 'From wide'; }
 }
-  </code></pre>
+<% end %>
 </section>
 
 
@@ -288,7 +288,7 @@ $breakup-breakpoints: (
 
   <div class="grid">
     <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 // example_allblocks.scss
 @import 'breakup';
 $breakup-included-blocks: (
@@ -300,10 +300,10 @@ $breakup-included-blocks: (
 
 @import 'global_variables';
 @import 'component';
-      </code></pre>
+<% end %>
     </div>
      <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 // example_allblocks.css
 .component {
   content: 'From basic';
@@ -319,7 +319,7 @@ $breakup-included-blocks: (
     content: 'From wide';
   }
 }
-      </code></pre>
+<% end %>
     </div>
   </div>
 
@@ -334,7 +334,7 @@ $breakup-included-blocks: (
 
   <div class="grid">
     <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 // example_allblocks.scss
 @import 'breakup';
 $breakup-included-blocks: (
@@ -343,17 +343,17 @@ $breakup-included-blocks: (
 
 @import 'global_variables';
 @import 'component';
-      </code></pre>
+<% end %>
     </div>
      <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 // example_wideonly.scss
 @media (min-width: 36em) {
   .component {
     content: 'From wide';
   }
 }
-      </code></pre>
+<% end %>
     </div>
   </div>
 </section>
@@ -364,7 +364,7 @@ $breakup-included-blocks: (
 
   <div class="grid" style="font-size: 0.95em;">
     <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 // example_oldie.scss
 @import 'breakup';
 
@@ -379,10 +379,10 @@ $breakup-breakpoints-allow-naked: (
 
 @import 'global_variables';
 @import 'component';
-      </code></pre>
+<% end %>
     </div>
      <div class="grid__item one-half">
-      <pre><code>
+  <% code 'scss' do %>
 .component {
   content: 'From basic';
 }
@@ -390,7 +390,7 @@ $breakup-breakpoints-allow-naked: (
 .component {
   content: 'From wide';
 }
-      </code></pre>
+<% end %>
     </div>
   </div>
 </section>
@@ -398,7 +398,7 @@ $breakup-breakpoints-allow-naked: (
 <section>
   <h2>Blocks</h2>
 
-  <pre><code>
+<% code 'scss' do %>
 $breakup-included-blocks: ('basic', 'thin');
 
 @mixin breakup-block($block-name) {
@@ -414,12 +414,13 @@ $breakup-included-blocks: ('basic', 'thin');
 @include breakup-block('wide') {
   .b { content: 'I shall *not* be output'; }
 }
-  </code></pre>
+<% end %>
 </section>
 
 <section>
   <h2>Media Query Wraps</h2>
-  <pre><code>$breakup-included-blocks: ('basic', 'thin');
+<% code 'scss' do %>
+$breakup-included-blocks: ('basic', 'thin');
 $breakup-naked: false;
 
 @mixin breakup-media($declaration, $allow-naked: false) {
@@ -436,14 +437,15 @@ $breakup-naked: false;
     content: 'I am wrapped in a MQ';
     content: 'unless $breakup-naked is true';
   }
-}</code></pre>
+}
+<% end %>
 </section>
 
 
 <section>
   <h2>Breakpoints</h2>
 
-  <pre><code>
+<% code 'scss' do %>
 @mixin breakup-breakpoint($breakpoint-name) {
   // Not a real function
   $mq-declaration: find-mq-from-name($breakpoint-name);
@@ -454,7 +456,7 @@ $breakup-naked: false;
     }
   }
 }
-  </code></pre>
+<% end %>
 
 
 </section>
@@ -465,7 +467,7 @@ $breakup-naked: false;
 
   <div class="grid">
     <div class="grid__item one-whole">
-      <pre><code>
+  <% code 'scss' do %>
 // _component.scss
 @include breakup-tweakpoint('(min-width: 45em)', 'wide') {
   .component {
@@ -481,7 +483,7 @@ $breakup-naked: false;
     }
   }
 }
-      </code></pre>
+<% end %>
 
     </div>
   </div>

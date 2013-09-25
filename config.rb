@@ -4,6 +4,8 @@ set :images_dir, 'images'
 
 activate :relative_assets
 
+activate :syntax
+
 activate :deploy do |deploy|
   # As this is a user page, the page info is built off the master branch
   deploy.method = :git
