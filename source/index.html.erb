@@ -1,0 +1,529 @@
+---
+title: Structuring CSS
+author: Ben Scott
+theme: sky
+theme_highlight: zenburn
+---
+
+<section>
+  <h1>Structuring CSS</h1>
+  <p>
+    <small>Ben Scott / <a href="http://twitter.com/BPScott">@BPScott</a></small>
+  </p>
+</section>
+
+
+<section>
+  <h2>Who?</h2>
+
+  <ul>
+    <li>Web Developer @ <a href="http://www.bbc.co.uk/programmes">bbc.co.uk/programmes</a></li>
+    <li>Sass-junkie</li>
+    <li>Approaching the 4th stage of knowing CSS</li>
+  </ul>
+</section>
+
+
+<section>
+  <div class="block-cite">
+    <figure>
+    <blockquote cite="https://twitter.com/cackhanded/status/358721135677935616">
+      <p>The four stages of CSS:</p>
+      <ol><li>I don’t know CSS.</li>
+      <li>I know enough CSS to get by.</li>
+      <li>I _know_ CSS.</li>
+      <li>Fuck CSS.</li></ol></blockquote>
+    <figcaption>&mdash; <a href="https://twitter.com/cackhanded/status/358721135677935616">@cackhanded</a></figcaption>
+  </figure>
+  </div>
+  <aside class="notes">
+    Harry Roberts put this less swearily:
+    "The better you get a writing code then the less you want to write"
+  </aside>
+</section>
+
+<section>
+  <h2>CSS is Easy</h2>
+  <pre><code>
+.selector {
+  property: value;
+}
+  </code></pre>
+</section>
+
+
+<section>
+  <h2>Managing CSS is Hard</h2>
+  <pre><code>
+.selector {
+  property: value;
+}
+.another-selector {
+  property: value;
+}
+.yet-another-selector {
+  property: value;
+}
+.am-i-related-to-that-stuff-above {
+  seriously: 'who knows';
+}
+  </code></pre>
+
+  <aside class="notes">
+    /programmes is a long-lived project that continue to grow.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Why is it so hard?</h2>
+
+  <ul>
+    <li>People write new CSS for everything.</li>
+    <li>Everything goes into the global scope.</li>
+    <li>Not inherently obvious how selectors interrelate.</li>
+  </ul>
+
+  <aside class="notes">
+    New css is written because people don't feel safe extending what is already
+    there - because they don't know what it shall affect.
+
+    This is a superconducting loop for creating a goldmine of technical debt.
+    Bad CSS means you don't want to touch it, which means you write new css,
+    which you then don't want to touch for maintainance later down the line.
+
+    It's difficult to be confident that you're not changing anything unexpected
+  </aside>
+</section>
+
+<section>
+  <h2>Build Smaller,<br>Isolated Things</h2>
+</section>
+
+
+<section>
+  <h2>Single Responsibility</h2>
+  <p>Do one thing and do it well</p>
+</section>
+
+
+<section>
+  <h2>Single Responsibility</h2>
+
+  <div class="grid">
+    <div class="grid__item one-third">Components</div>
+    <div class="grid__item one-third">Macro-layout</div>
+    <div class="grid__item one-third">Theming</div>
+  </div>
+
+  <aside class="notes">
+    <p>Everything you create broadly fits into one of three buckets:</p>
+    <ul>
+      <li>Component: Most things, flexible, 100% width, positioning of elements.</li>
+      <li>Macro-layout: Defining the layout of Components within a page.</li>
+      <li>Theming: colors for Components.</li>
+    </ul>
+
+    These types are then brought together - I want this component, with this
+    coloring in a space this big.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Composition</h2>
+  <p>Create Lego bricks to clip together</p>
+</section>
+
+
+<section>
+  <h2>Be Additive</h2>
+  <p>Mobile first &amp; extend from core functionality</p>
+
+  <aside class="notes">
+    Avoid writing CSS that undoes other CSS.
+
+    A component can have variations. Keep the core functionality but use
+    additional classes to enable variations.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Build Bottom Up</h2>
+  <p>Base Styles &rarr; Components &rarr; Pages</p>
+
+  <aside class="notes">
+    Traditionally we've always thought of whole pages, instead think of items
+    that just happen to be placed on the page in a particular order.
+
+    By decoupling your components from the hierarchy it is placed in then you
+    allow your components to be used anywhere.
+
+    Low specificity selectors so they can be easily overridden if needed.
+    No IDs, try and keep below 3 levels of nesting.
+
+    Brad Frost's pattern-lab concept
+  </aside>
+</section>
+
+
+<section>
+  <h2>Naming Conventions</h2>
+  <p>Give hints about how elements interrelate</p>
+</section>
+
+
+<section>
+  <h2>BEM</h2>
+
+  <pre><code>
+<div class="media media--right">
+  <div class="media__img">
+    <img src="cats.gif" alt="" />
+  </div>
+  <div class="media__body">
+    Now you've got a hint that I belong to
+    the media block when reading HTML
+  </div>
+</div>
+  </code></pre>
+
+  <aside class="notes">
+    * Keeps specificity low as usually you're only defining a single class
+    * Reduces cognitive load as you can easily see what base object a sub-element
+    belongs to
+  </aside>
+</section>
+
+
+<section>
+  <h2>&larr; Input<br><br>Output &rarr;</h2>
+</section>
+
+
+<section>
+  <h2>Some Problems</h2>
+
+  <ol>
+    <li>I want keep an object's code all in one file</li>
+    <li>I want to build mobile-first</li>
+    <li>I want oldIE to have wide styles</li>
+  </ol>
+
+  <aside class="notes">
+    For /programmes we migrated from multiple to all+oldIE. We started
+    with basic/wide styles but this meant that we had to compromise on
+    "mobile-first" - the basic styles were mobile first but for wide styles we
+    had to be desktop-first - switching between those two modes of thinking is a
+    pain.
+
+    Potential solutions:
+
+    RespondJS: Requires JS, Forces slow, old browsers to do even more work. Poor UX.
+    Build desktop-first: Requires writing more CSS to undo desktop styles.
+    Bespoke Mixin: Tied to a project's needs - I want a generic solution.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Breakup</h2>
+
+  <ul>
+    <li>Define blocks of CSS using mixins</li>
+    <li>Optionally wrapped in media queries</li>
+    <li>Output per-breakpoint stylesheets</li>
+    <li>Output oldIE stylesheets</li>
+  </ul>
+
+  <aside class="notes">
+    Two core ideas:
+
+    1) Wrap css in a block to toggle what gets output
+    2) Wrap css in a block to wrap it in a media query (or not)
+  </aside>
+</section>
+
+
+<section>
+  <h2>Defining Breakpoints</h2>
+  <pre><code>
+// _global_variables.scss
+$breakup-breakpoints: (
+  'thin' '(max-width: 35.999em)',
+  'wide' '(min-width: 36em)',
+  'full' '(min-width: 61em)'
+);
+  </code></pre>
+
+  <aside class="notes">
+    Wrapping everything in a two mixins is a bit repetitive and you shall share
+    breakpoints across many components. Let's DRY this out by adding a breakpoint lookup table.
+  </aside>
+</section>
+
+<section>
+  <h2>A Component</h2>
+
+  <pre><code>
+// _component.scss
+@include breakup-block('basic') {
+  .component { content: 'From basic'; }
+}
+
+@include breakup-breakpoint('thin') {
+  .component { content: 'From thin'; }
+}
+
+@include breakup-breakpoint('wide') {
+  .component { content: 'From wide'; }
+}
+  </code></pre>
+</section>
+
+
+<section>
+  <h2>A Single Output File</h2>
+
+  <div class="grid">
+    <div class="grid__item one-half">
+      <pre><code>
+// example_allblocks.scss
+@import 'breakup';
+$breakup-included-blocks: (
+  'basic'
+  'thin'
+  'wide'
+  'full'
+);
+
+@import 'global_variables';
+@import 'component';
+      </code></pre>
+    </div>
+     <div class="grid__item one-half">
+      <pre><code>
+// example_allblocks.css
+.component {
+  content: 'From basic';
+}
+
+@media (max-width: 35.999em) {
+  .component {
+    content: 'From thin';
+  }
+}
+@media (min-width: 36em) {
+  .component {
+    content: 'From wide';
+  }
+}
+      </code></pre>
+    </div>
+  </div>
+
+  <aside class="notes">
+    This is your standard 'best-case' scenario.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Per-Size Output Files</h2>
+
+  <div class="grid">
+    <div class="grid__item one-half">
+      <pre><code>
+// example_allblocks.scss
+@import 'breakup';
+$breakup-included-blocks: (
+  'wide'
+);
+
+@import 'global_variables';
+@import 'component';
+      </code></pre>
+    </div>
+     <div class="grid__item one-half">
+      <pre><code>
+// example_wideonly.scss
+@media (min-width: 36em) {
+  .component {
+    content: 'From wide';
+  }
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h2>OldIE Output Files</h2>
+
+  <div class="grid" style="font-size: 0.95em;">
+    <div class="grid__item one-half">
+      <pre><code>
+// example_oldie.scss
+@import 'breakup';
+
+$breakup-included-blocks: (
+  'basic'
+  'wide'
+);
+$breakup-naked: true;
+$breakup-breakpoints-allow-naked: (
+  'wide'
+);
+
+@import 'global_variables';
+@import 'component';
+      </code></pre>
+    </div>
+     <div class="grid__item one-half">
+      <pre><code>
+.component {
+  content: 'From basic';
+}
+
+.component {
+  content: 'From wide';
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Blocks</h2>
+
+  <pre><code>
+$breakup-included-blocks: ('basic', 'thin');
+
+@mixin breakup-block($block-name) {
+  @if index($breakup-included-blocks, $block-name) != false {
+    @content;
+  }
+}
+
+@include breakup-block('basic') {
+  .a { content: 'I shall be output'; }
+}
+
+@include breakup-block('wide') {
+  .b { content: 'I shall *not* be output'; }
+}
+  </code></pre>
+</section>
+
+<section>
+  <h2>Media Query Wraps</h2>
+  <pre><code>$breakup-included-blocks: ('basic', 'thin');
+$breakup-naked: false;
+
+@mixin breakup-media($declaration, $allow-naked: false) {
+  @if not $breakup-naked {
+    @media #{$declaration} { @content; }
+  }
+  @else {
+    @if $allow-naked == true { @content; }
+  }
+}
+
+@include breakup-media('(min-width: 36em)', true) {
+  .c {
+    content: 'I am wrapped in a MQ';
+    content: 'unless $breakup-naked is true';
+  }
+}</code></pre>
+</section>
+
+
+<section>
+  <h2>Breakpoints</h2>
+
+  <pre><code>
+@mixin breakup-breakpoint($breakpoint-name) {
+  // Not a real function
+  $mq-declaration: find-mq-from-name($breakpoint-name);
+
+  @include breakup-block($breakpoint-name) {
+    @include breakup-media($mq-declaration, true) {
+      @content;
+    }
+  }
+}
+  </code></pre>
+
+
+</section>
+
+
+<section>
+  <h2>Tweakpoints</h2>
+
+  <div class="grid">
+    <div class="grid__item one-whole">
+      <pre><code>
+// _component.scss
+@include breakup-tweakpoint('(min-width: 45em)', 'wide') {
+  .component {
+    content: 'From tweakpoint within wide';
+  }
+}
+
+// Equivalent to:
+@include breakup-block('wide') {
+  @include breakup-media('(min-width: 45em)') {
+    .component {
+      content: 'From tweakpoint within wide';
+    }
+  }
+}
+      </code></pre>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h2>TL;DR</h2>
+
+  <ul>
+    <li>Keep it simple</li>
+    <li>Build small isolated components</li>
+    <li>Hint how elements within an object are related</li>
+    <li>Split your output stylesheets for oldIE</li>
+  </ul>
+
+  <aside class="notes">
+    Bootstrap is a good example of a component library.
+  </aside>
+</section>
+
+
+<section>
+  <h2>Link Dump</h2>
+  <ul>
+    <li><a href="https://github.com/BPScott/breakup">Breakup</a></li>
+    <li><a href="http://bradfrostweb.com/blog/post/atomic-web-design/">Atomic Design</a></li>
+    <li><a href="http://csswizardry.com/2013/05/scope-in-css/">Scope in CSS</a></li>
+    <li><a href="http://www.youtube.com/watch?v=ldx4ZFxMEeo&hd=1">Normalising Designs for Better Quality CSS</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h1>Thank You</h1>
+
+  <h3>Any Questions?</h3>
+  <p>
+    <small>Ben Scott / <a href="http://twitter.com/BPScott">@BPScott</a></small>
+  </p>
+
+    <p>
+    <small><a href="http://www.reload.me.uk/talk-structuring-css">reload.me.uk/talk-structuring-css</a></small>
+  </p>
+</section>
