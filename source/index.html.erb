@@ -59,13 +59,13 @@ theme_highlight: zenburn
   property: value;
 }
 .another-selector {
-  property: value;
-}
-.yet-another-selector {
-  property: value;
+  another-property: another-value;
 }
 .am-i-related-to-that-stuff-above {
   seriously: 'who knows';
+}
+#tlec .col-b #more-tleo-promo .promo-entry {
+  oh-god: 'this is really paranoid';
 }
 <% end %>
 
@@ -235,10 +235,11 @@ theme_highlight: zenburn
     <li>Optionally wrapped in media queries</li>
     <li>Output per-breakpoint stylesheets</li>
     <li>Output oldIE stylesheets</li>
+    <li><a href="http://github.com/BPScott/breakup">github.com/BPScott/breakup</a></li>
   </ul>
 
   <aside class="notes">
-    Two core ideas:
+    Available as a compass plugin or standalone.
 
     1) Wrap css in a block to toggle what gets output
     2) Wrap css in a block to wrap it in a media query (or not)
@@ -335,7 +336,7 @@ $breakup-included-blocks: (
   <div class="grid">
     <div class="grid__item one-half">
   <% code 'scss' do %>
-// example_allblocks.scss
+// example_wideonly.scss
 @import 'breakup';
 $breakup-included-blocks: (
   'wide'
@@ -499,10 +500,6 @@ $breakup-naked: false;
     <li>Hint how elements within an object are related</li>
     <li>Split your output stylesheets for oldIE</li>
   </ul>
-
-  <aside class="notes">
-    Bootstrap is a good example of a component library.
-  </aside>
 </section>
 
 
