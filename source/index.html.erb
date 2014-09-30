@@ -10,6 +10,14 @@ theme_highlight: zenburn
   <p>
     <small>Ben Scott / <a href="http://twitter.com/BPScott">@BPScott</a></small>
   </p>
+
+  <aside class="notes">
+    <ul>
+      <li>Not a Sass-focused talk</li>
+      <li>Going to be covering some general ideas around how I write CSS that
+        I've found helps me avoid complication and confusion</li>
+    </ul>
+  </aside>
 </section>
 
 
@@ -104,6 +112,17 @@ theme_highlight: zenburn
 <section>
   <h2>Single Responsibility</h2>
   <p>Do one thing and do it well</p>
+
+  <aside class="notes">
+    <ul>
+      <li>A classic best practice from Computer Science</li>
+      <li>By knowing something only does one thing, you can be confident about
+        what it affects and what it doesn't</li>
+      <li>Responsibilities should not overlap so that you may combine them
+        without the fear of unexpected behavior due to overlapping remits</li>
+      <li>Or if you want to be fancy: Classes should be orthogonal</li>
+    </ul>
+  </aside>
 </section>
 
 
@@ -119,7 +138,8 @@ theme_highlight: zenburn
   <aside class="notes">
     <p>Everything you create broadly fits into one of three buckets:</p>
     <ul>
-      <li>Component: Most things, flexible, 100% width, positioning of elements.</li>
+      <li>Component: Most things, flexible, 100% width, positioning of elements.
+        domain specific ojects e.g. the programme object</li>
       <li>Macro-layout: Defining the layout of Components within a page.</li>
       <li>Theming: colors for Components.</li>
     </ul>
@@ -133,6 +153,13 @@ theme_highlight: zenburn
 <section>
   <h2>Composition</h2>
   <p>Create Lego bricks to clip together</p>
+
+  <aside class="notes">
+    <ul>
+      <li>Reusable components that can appear on many pages e.g. Segments/credits
+        on episodes/clips</li>
+    </ul>
+  </aside>
 </section>
 
 
@@ -141,10 +168,15 @@ theme_highlight: zenburn
   <p>Mobile first &amp; extend from core functionality</p>
 
   <aside class="notes">
-    Avoid writing CSS that undoes other CSS.
-
-    A component can have variations. Keep the core functionality but use
-    additional classes to enable variations.
+    <ul>
+      <li>Two approaches: Mobile First (progressive enhancement), or Desktop First
+        (graceful degradation)</li>
+        <li>Avoid writing CSS that undoes other CSS.</li>
+        <li>Rather build a tower from the ground up instead of taking pieces
+          away like a game of Jenga</li>
+        <li>A component can have variations. Keep the core functionality but use
+    additional classes to enable variations. e.g. Programme list vs grid</li>
+    </ul>
   </aside>
 </section>
 
@@ -154,16 +186,18 @@ theme_highlight: zenburn
   <p>Base Styles &rarr; Components &rarr; Pages</p>
 
   <aside class="notes">
-    Traditionally we've always thought of whole pages, instead think of items
-    that just happen to be placed on the page in a particular order.
-
-    By decoupling your components from the hierarchy it is placed in then you
-    allow your components to be used anywhere.
-
-    Low specificity selectors so they can be easily overridden if needed.
-    No IDs, try and keep below 3 levels of nesting.
-
-    Brad Frost's pattern-lab concept
+    <ul>
+      <li>Traditionally we've always thought of whole pages, instead think o
+       items that just happen to be placed on the page in a particular order.</li>
+      <li>By decoupling your components from the hierarchy they are placed in
+        then you allow your components to be used anywhere.</li>
+      <li>If they can be used anywhere then put them in a Styleguide to show
+        examples of usage</li>
+      <li>Brad Frost's Atomic Design and pattern-lab concepts</li>
+      <li>Low specificity selectors so they can be easily overridden if needed -
+        when moving to higher-level concepts. No IDs, try and keep below 3
+        levels of nesting.</li>
+    </ul>
   </aside>
 </section>
 
@@ -190,9 +224,11 @@ theme_highlight: zenburn
 <% end %>
 
   <aside class="notes">
-    * Keeps specificity low as usually you're only defining a single class
-    * Reduces cognitive load as you can easily see what base object a sub-element
-    belongs to
+    <ul>
+      <li> Keeps specificity low as usually you're only defining a single class</li>
+      <li>Reduces cognitive load as you can easily see what base object a
+        sub-element belongs to</li>
+    </ul>
   </aside>
 </section>
 

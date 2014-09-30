@@ -45,6 +45,7 @@
     <%= javascript_include_tag  "../reveal/js/reveal.min" %>
 
     <script>
+      var width = 1280;
       // Full list of configuration options available here:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
@@ -53,6 +54,8 @@
         history: true,
         center: true,
         rollingLinks: false,
+        width: width,
+        height: width / (16/9),
 
         transition: '<%= data.page.transition || "default" %>', // default/cube/page/concave/zoom/linear/fade/none
 
